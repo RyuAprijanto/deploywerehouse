@@ -103,11 +103,7 @@ Route::post('/suppliers/{id}', [UserController::class, 'addSupplier'])->middlewa
 Route::delete('/suppliers/{id}', [UserController::class, 'removeSupplier'])->middleware('auth');
 
 // Display the restock page
-<<<<<<< HEAD
-Route::get('/restock', [ItemController::class, 'showRestockPage'])->name('restockPage');
-=======
 Route::get('/restock', [ItemController::class, 'showRestockPage'])->name('showRestockPage');
->>>>>>> 50d6e19 (yes)
 
 // Process the restock form
 Route::post('/restock', [ItemController::class, 'processRestock'])->name('processRestock');
@@ -116,9 +112,6 @@ Route::post('/restock', [ItemController::class, 'processRestock'])->name('proces
 Route::get('/transactions', [TransactionController::class, 'viewTransactions'])->name('viewTransactions');
 Route::get('/transactions/add', [TransactionController::class, 'create'])->name('addTransaction');
 Route::post('/transactions/store', [TransactionController::class, 'store'])->name('storeTransaction');
-<<<<<<< HEAD
-=======
 Route::get('/monthly-transactions', [TransactionController::class, 'viewAllMonthlyTransactions'])->name('monthlyTransactions');
 
->>>>>>> 50d6e19 (yes)
 
