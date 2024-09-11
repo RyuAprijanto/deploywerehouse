@@ -11,13 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
-<<<<<<< HEAD
-     public function viewTransactions()
-{
-    $userId = Auth::id();
-
-    // Group transactions by year and month, calculate total per month
-=======
     public function viewTransactions(Request $request)
     {
         $userId = Auth::id();
@@ -65,53 +58,21 @@ class TransactionController extends Controller
 {
     $userId = Auth::id();
 
->>>>>>> 50d6e19 (yes)
     $monthlyTransactions = DB::table('transactions')
         ->join('transaction_types', 'transactions.transaction_type_id', '=', 'transaction_types.id')
         ->select(
             DB::raw('YEAR(transactions.date) as year'),
             DB::raw('MONTH(transactions.date) as month'),
-<<<<<<< HEAD
-            DB::raw('SUM(CASE WHEN transaction_types.name = "sell" THEN transactions.price ELSE -transactions.price END) as total')
-=======
             DB::raw('SUM(CASE WHEN transaction_types.name = "Penjualan" THEN transactions.price ELSE -transactions.price END) as total')
->>>>>>> 50d6e19 (yes)
         )
         ->where('transactions.user_id', $userId)
         ->groupBy('year', 'month')
         ->orderBy('year', 'desc')
         ->orderBy('month', 'desc')
-<<<<<<< HEAD
-        ->get();
-
-    $transactions = Transaction::where('user_id', $userId)
-        ->with('transactionType')
-        ->orderBy('date', 'desc')
-        ->get();
-    
-    $currentMonth = now()->month;
-    $currentYear = now()->year;
-    $totalValue = DB::table('transactions')
-        ->join('transaction_types', 'transactions.transaction_type_id', '=', 'transaction_types.id')
-        ->where('transactions.user_id', '=', Auth::id())
-        ->whereMonth('transactions.date', $currentMonth)
-        ->whereYear('transactions.date', $currentYear)  // Add this to restrict to the current year
-        ->select(DB::raw('SUM(CASE 
-            WHEN transaction_types.name = "sell" THEN transactions.price 
-            WHEN transaction_types.name = "buy" THEN -transactions.price 
-            ELSE 0 END) as total_profit_loss'))
-        ->value('total_profit_loss');
-
-    return view('transactions', [
-        'transactions' => $transactions,
-        'monthlyTransactions' => $monthlyTransactions,
-        'totalValue' => $totalValue
-=======
         ->paginate(10); // Adjust the pagination as needed
 
     return view('monthlyTransactions', [
         'monthlyTransactions' => $monthlyTransactions
->>>>>>> 50d6e19 (yes)
     ]);
 }
 

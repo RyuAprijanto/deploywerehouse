@@ -65,10 +65,7 @@ class AuthController extends Controller
         $newUser = new User();
         $newUser->email = $request->input('inputEmail');
         $newUser->username = $request->input('inputUsername');
-<<<<<<< HEAD
-=======
         $newUser->role_id = 1;
->>>>>>> 50d6e19 (yes)
         $newUser->password = Hash::make($request->input('inputPassword'));
 
         $newUser->save();

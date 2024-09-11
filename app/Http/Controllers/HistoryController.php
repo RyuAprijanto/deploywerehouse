@@ -18,11 +18,7 @@ class HistoryController extends Controller
         $history = History::with('user')
             ->where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
-<<<<<<< HEAD
-            ->paginate(10);;
-=======
             ->paginate(10);
->>>>>>> 50d6e19 (yes)
             
         return view('history', compact('history'));
     }

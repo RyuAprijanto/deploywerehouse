@@ -38,9 +38,6 @@ public function updateProfile(Request $request)
     if ($request->filled('password')) {
         $user->password = Hash::make($request->input('password'));
     }
-<<<<<<< HEAD
-
-=======
     if ($user->isDirty()) {
         History::create([
             'user_id' => Auth::id(),
@@ -51,55 +48,9 @@ public function updateProfile(Request $request)
             'action_time' => now(),
         ]);
     }
->>>>>>> 50d6e19 (yes)
     $user->save();
 
     return redirect()->route('showProfile')->with('success', 'Profile updated successfully!');
 }
 
-<<<<<<< HEAD
-    public function addSupplier(Request $request, $id)
-    {
-        /** @var \App\Models\User $seller **/
-        $seller = auth()->user();
-        $supplier = User::find($id);
-
-        // Ensure the supplier exists and has the correct role
-        if (!$supplier || !$supplier->role || $supplier->role->name !== 'supplier') {
-            return response()->json(['message' => 'Supplier not found or invalid role'], 404);
-        }
-
-        // Check if the supplier is already added
-        if ($seller->suppliers()->where('supplier_id', $supplier->id)->exists()) {
-            return response()->json(['message' => 'Supplier already added'], 400);
-        }
-
-        // Attach the supplier
-        $seller->suppliers()->attach($supplier);
-
-        return response()->json(['message' => 'Supplier added successfully']);
-    }
-
-
-    public function removeSupplier(Request $request, $id)
-    {
-        /** @var \App\Models\User $seller **/
-        $seller = auth()->user();
-        $supplier = User::find($id);
-
-        if (!$supplier || $supplier->role !== 'supplier') {
-            return response()->json(['message' => 'Supplier not found or invalid role'], 404);
-        }
-
-        if (!$seller->suppliers()->where('supplier_id', $supplier->id)->exists()) {
-            return response()->json(['message' => 'Supplier not found'], 400);
-        }
-
-        $seller->suppliers()->detach($supplier);
-
-        return response()->json(['message' => 'Supplier removed successfully']);
-    }
-
-=======
->>>>>>> 50d6e19 (yes)
 }

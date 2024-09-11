@@ -11,12 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-<<<<<<< HEAD
-
-=======
 use App\Models\Transaction;
 use App\Models\TransactionType;
->>>>>>> 50d6e19 (yes)
 use function PHPSTORM_META\type;
 
 class ItemController extends Controller
@@ -177,40 +173,6 @@ class ItemController extends Controller
         $image->storeAs('public/images', $imageName);
         $product->image = $imageName;
     }
-<<<<<<< HEAD
-
-    $product->save();
- 
-     $product->save();
-     $changes = [];
-     if ($product->isDirty('name')) {
-         $changes[] = 'Nama diubah';
-     }
-     if ($product->isDirty('type_id')) {
-         $changes[] = 'Kategori diubah';
-     }
-     if ($product->isDirty('description')) {
-         $changes[] = 'Deskripsi diubah';
-     }
-     if ($product->isDirty('stock')) {
-         $changes[] = 'Stok diubah';
-     }
-     if ($product->isDirty('image')) {
-         $changes[] = 'Gambar diubah';
-     }
-     $details = implode('; ', $changes);
-     if ($details) {
-         History::create([
-             'user_id' => Auth::id(),
-             'product_id' => $product->id,
-             'action' => 'Ubah Produk',
-             'quantity' => $product->stock,
-             'details' => $details,
-             'action_time' => now(),
-         ]);
-     }
- 
-=======
  
     if ($product->isDirty()) {
         History::create([
@@ -223,7 +185,6 @@ class ItemController extends Controller
         ]);
     }
     $product->save();
->>>>>>> 50d6e19 (yes)
      return redirect()->route('productDetail', ['id' => $product->id])->with('success', 'Product updated successfully');
  }
 
@@ -232,8 +193,6 @@ class ItemController extends Controller
     {
     $product = Product::findOrFail($id);
     $typeId = $product->type_id; 
-<<<<<<< HEAD
-=======
     History::create([
         'user_id' => Auth::id(),
         'product_id' => $product->id,
@@ -242,7 +201,6 @@ class ItemController extends Controller
         'details' => "Berhasil menghapus produk ".$product->name,
         'action_time' => now(),
     ]);
->>>>>>> 50d6e19 (yes)
     $product->delete();
 
     //cek produk lain dengan tipe sama, klo gaada delete tipenya
@@ -273,43 +231,8 @@ class ItemController extends Controller
         return view('checkout', compact('products'));
     }
 
-<<<<<<< HEAD
-    public function processCheckout(Request $request)
-    {
-        $request->validate([
-            'products' => 'required|array',
-            'products.*.id' => 'required|exists:products,id',
-        ]);
-        $changes= [];
-        foreach ($request->products as $productData) {
-            $product = Product::findOrFail($productData['id']);
-            if ($product->stock < $productData['quantity']) {
-                return back()->withErrors(['message' => 'Not enough stock for ' . $product->name]);
-            }
-            $product->stock -= $productData['quantity'];
-            $product->save();
-            if($productData['quantity'] > 0){
-                $changes[] = 'Stok ' . $product->name . ' dikurangi ' . $productData['quantity'];
-            }
-        }
-        $details = implode('; ', $changes);
-        if($details){
-
-            History::create([
-            'user_id' => Auth::id(),
-            'product_id' => $product->id,
-            'action' => 'Pengurangan Stok',
-            'quantity' => 0,
-            'details' => $details,
-            'action_time' => now(),
-        ]);
-        }
-        return redirect()->route('index_home')->with('success', 'Checkout successful!');
-    }
-=======
     
     
->>>>>>> 50d6e19 (yes)
     public function addStockPage()
     {
         $products = DB::table('products')
@@ -345,28 +268,35 @@ class ItemController extends Controller
         }
         return redirect()->route('index_home')->with('success', 'Checkout completed successfully!');
     }
-    public function updateStock(Request $request, $id)
+   public function updateStock(Request $request, $id)
 {
     $product = Product::findOrFail($id);
     $action = $request->input('action');
 
     if ($action === 'increase') {
         $product->stock += 1;
+        History::create([
+            'user_id' => Auth::id(),
+            'action' => 'Tambah Stok',
+            'product_id' => $product->id,
+            'details' => 'Menambahkan 1 Stok untuk '. $product->name,
+            'quantity' => 1,
+            'action_time' => now(),
+        ]);
     } elseif ($action === 'decrease') {
         $product->stock = max(0, $product->stock - 1); // Prevent stock from going below 0
+        History::create([
+            'user_id' => Auth::id(),
+            'action' => 'Kurang Stok',
+            'product_id' => $product->id,
+            'details' => 'Mengurangkan 1 Stok untuk '. $product->name,
+            'quantity' => 1,
+            'action_time' => now(),
+        ]);
     }
-
     $product->save();
-
     return redirect()->route('index_home')->with('success', 'Stock updated successfully!');
 }
-<<<<<<< HEAD
-public function showRestockPage()
-{
-    $products = Product::all();
-    return view('restockPage', compact('products'));
-=======
-
 public function showRestockPage(Request $request)
 {
     // Get search term and filter type from the request
@@ -400,30 +330,19 @@ public function showRestockPage(Request $request)
     $products = $query->orderBy('stock', 'asc')->paginate(8);
 
     return view('restockPage', compact('products', 'allTypes', 'searchTerm', 'selectedType'));
->>>>>>> 50d6e19 (yes)
 }
 
 public function processRestock(Request $request)
 {
     $selectedProducts = $request->input('products', []);
     $restockQuantities = $request->input('restock_qty', []);
-<<<<<<< HEAD
-
-=======
     $temp = 0;
->>>>>>> 50d6e19 (yes)
     foreach ($selectedProducts as $productId) {
         $product = Product::find($productId);
 
         if ($product) {
             $newProduct = $product->replicate();
             $newProduct->stock = $restockQuantities[$productId] ?? 0;
-<<<<<<< HEAD
-            $newProduct->save();
-        }
-    }
-
-=======
             $temp+=$temp+$newProduct->stock*$newProduct->buy_price;
             $newProduct->save();
         }
@@ -440,7 +359,6 @@ public function processRestock(Request $request)
         'created_at' => now(),
         'updated_at' => now()
     ]);
->>>>>>> 50d6e19 (yes)
     return redirect()->route('index_home')->with('success', 'Products restocked successfully!');
 }
 

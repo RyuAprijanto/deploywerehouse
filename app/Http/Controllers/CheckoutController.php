@@ -13,28 +13,13 @@ class CheckoutController extends Controller
 {
     public function viewCheckout()
 {
-<<<<<<< HEAD
-=======
     $userId = Auth::id(); // Get the current user's ID
     
->>>>>>> 50d6e19 (yes)
     // Retrieve checkout items and calculate total price
     $checkoutItems = session('checkoutItems', []);
     $totalPrice = array_reduce($checkoutItems, function ($carry, $item) {
         return $carry + ($item['price'] * $item['quantity']);
     }, 0);
-<<<<<<< HEAD
-    $allTypes = DB::table('products')
-            ->join('types', 'products.type_id', '=', 'types.id')
-            ->where('products.user_id', '=', Auth::user()->id)
-            ->select('types.name')
-            ->distinct()
-            ->pluck('name');
-    // Pass products for the view
-    $products = Product::all();
-    return view('checkout', compact('checkoutItems', 'totalPrice', 'products','allTypes'));
-}
-=======
     
     // Fetch distinct product types for the current user
     $allTypes = DB::table('products')
@@ -54,7 +39,6 @@ class CheckoutController extends Controller
 }
 
 
->>>>>>> 50d6e19 (yes)
 public function checkoutviewPageSearch(Request $request)
 {
     $search = $request->input('search');
@@ -192,85 +176,17 @@ public function processCheckout(Request $request)
 {
     $checkoutItems = session('checkoutItems', []);
     $userId = Auth::id();
-<<<<<<< HEAD
-    
-=======
 
     // Check if there are items in the checkout
     if (empty($checkoutItems)) {
         return redirect()->route('index_home')->with('error', 'No items in the checkout.');
     }
 
->>>>>>> 50d6e19 (yes)
     // Calculate the total price of the checkout
     $totalPrice = array_reduce($checkoutItems, function ($carry, $item) {
         return $carry + ($item['price'] * $item['quantity']);
     }, 0);
 
-<<<<<<< HEAD
-    DB::beginTransaction();  // Start a database transaction
-
-    try {
-        // Create the checkout record
-        $checkoutId = DB::table('checkouts')->insertGetId([
-            'user_id' => $userId,
-            'total_price' => $totalPrice,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-
-        // Create records for each item in the checkout
-        foreach ($checkoutItems as $item) {
-            DB::table('checkout_items')->insert([
-                'checkout_id' => $checkoutId,
-                'product_id' => $item['product']->id,
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-            ]);
-
-            // Update product stock
-            Product::where('id', $item['product']->id)
-                ->decrement('stock', $item['quantity']);
-        }
-
-        // Retrieve the transaction type ID for "Sell"
-        $transactionTypeId = DB::table('transaction_types')
-            ->where('name', 'sell')
-            ->value('id');
-        
-        if (!$transactionTypeId) {
-            throw new \Exception('Transaction type "Sell" not found.');
-        }
-
-        // Insert the sell transaction record into the transactions table
-        DB::table('transactions')->insert([
-            'user_id' => $userId,
-            'transaction_type_id' => $transactionTypeId,
-            'date' => now(),
-            'price' => $totalPrice,
-            'description' => 'Checkout Transaction ID: ' . $checkoutId,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-
-        DB::commit();  // Commit the transaction
-
-        // Clear the checkout session
-        session()->forget('checkoutItems');
-
-        return redirect()->route('index_home')->with('success', 'Checkout processed successfully.');
-    } catch (\Exception $e) {
-        DB::rollBack();  // Rollback on failure
-        return redirect()->route('index_home')->with('error', 'Checkout failed: ' . $e->getMessage());
-    }
-}
-
-
-public function viewCheckouts()
-{
-    // Fetching the checkouts with their related checkoutItems
-    $checkouts = Checkout::with('checkoutItems')->get();
-=======
     // Create the checkout record
     $checkoutId = DB::table('checkouts')->insertGetId([
         'user_id' => $userId,
@@ -348,18 +264,14 @@ public function viewCheckouts(Request $request)
 
     // Order by creation date and paginate
     $checkouts = $query->orderBy('created_at', 'desc')->paginate(8);
->>>>>>> 50d6e19 (yes)
 
     return view('viewCheckouts', compact('checkouts'));
 }
 
-<<<<<<< HEAD
-=======
 
 
 
 
->>>>>>> 50d6e19 (yes)
     // Method to display details of a specific checkout
     public function checkoutsDetails($id)
 {
