@@ -7,27 +7,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     </head>
     <body class="flex w-screen h-screen justify-center items-center">
-<<<<<<< HEAD
         <div class="md:w-2/3 sm:w-full h-screen items-center justify-center py-12 lg:px-9 sm:px-9">
             <div class="mx-2 my-0 bg-black text-blue-700 text-3xl font-bold rounded-lg text-center animate-pulse">
                 WereHousing
             </div>
-    
-            <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Masuk Ke Akun</h2>
-            </div>
-    
-=======
-        <div class="w-1/2 h-screen items-center justify-center py-12 lg:px-9 sm:px-9">
-            <div class="mx-2 my-0 bg-black text-blue-700 text-3xl font-bold rounded-lg text-center animate-pulse">
-                WereHousing
-            </div>
 
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Masuk Ke Akun</h2>
             </div>
 
->>>>>>> 50d6e19 (yes)
             <div class="mt-10 sm:mx-auto sm:w-screen sm:max-w-sm">
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
@@ -51,7 +39,7 @@
                     </div>
                     <br>
 <<<<<<< HEAD
-                    
+
                     <div>
                         <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
 =======
@@ -66,7 +54,7 @@
                 @endif
                 <p class="mt-10 text-center text-sm text-gray-500">
 <<<<<<< HEAD
-                    Belum Punya Akun?   
+                    Belum Punya Akun?
 =======
                     Belum Punya Akun?
 >>>>>>> 50d6e19 (yes)
@@ -78,7 +66,7 @@
         </div>
     </body>
 <<<<<<< HEAD
-    
+
 =======
 
 >>>>>>> 50d6e19 (yes)

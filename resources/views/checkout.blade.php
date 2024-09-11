@@ -14,21 +14,13 @@
                     <h2 class="text-xl font-medium mb-4">Produk</h2>
                     <form class="flex flex-col md:flex-row gap-3 w-full md:w-auto" action="{{ url('/checkout/search') }}" method="GET" id="filterForm">
                         <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
-<<<<<<< HEAD
-                            <input type="text" name="search" placeholder="Search Product"
-=======
                             <input type="text" name="search" placeholder="Cari Produk"
->>>>>>> 50d6e19 (yes)
                                 class="w-2/3 md:w-80 px-3 h-10 rounded-l border-2 border-blue-600 focus:outline-none focus:border-grey-700"
                                 value="{{ request()->input('search') }}">
                             <select id="pricingType" name="type"
                                 class="w-1/3 md:w-40 h-10 border-2 border-blue-600 focus:outline-none focus:border-gray-700 text-gray-700 rounded px-2 mr-2 md:px-3 py-0 md:py-1 tracking-wider"
                                 onchange="document.getElementById('filterForm').submit();">
-<<<<<<< HEAD
-                                <option value="All" {{ request()->input('type') == 'All' ? 'selected' : '' }}>All</option>
-=======
                                 <option value="All" {{ request()->input('type') == 'All' ? 'selected' : '' }}>Semua</option>
->>>>>>> 50d6e19 (yes)
 
                                 @foreach ($allTypes as $type)
                                     <option value="{{ $type }}" {{ request()->input('type') == $type ? 'selected' : '' }}>
@@ -66,19 +58,15 @@
                     @endforeach
                 </tbody>
             </table>
-<<<<<<< HEAD
-        </div>
-
-=======
             <div class="mt-4 w-full flex justify-center">
                 {{ $products->appends(request()->query())->links() }}
             </div>
-            
+
         </div>
->>>>>>> 50d6e19 (yes)
         <!-- Checkout Section -->
-        <div class="col-span-1 bg-white p-4 rounded-lg shadow-md ml-6">
+        <div class="col-span-1 bg-white p-4 rounded-lg shadow-md ml-6" style="min-height: 200px;">
             <h1 class="text-2xl font-semibold mb-6">Checkout</h1>
+            @if (!empty($checkoutItems))
             <h2 class="text-xl font-medium mb-4">Rincian Transaksi</h2>
             <table class="min-w-full bg-white border mb-4">
                 <thead>
@@ -90,7 +78,6 @@
                     </tr>
                 </thead>
 
-                @if (!empty($checkoutItems))
                     <tbody>
                         @foreach ($checkoutItems as $item)
                         <tr>
@@ -116,24 +103,16 @@
                         @endforeach
                     </tbody>
                 </table>
-<<<<<<< HEAD
 
-                <p class="text-lg font-semibold mb-4">Total Price: Rp.{{ $totalPrice }}</p>
-                @else
-                    <p>No items in the checkout.</p>
-                @endif
-=======
-                
                 <p class="text-lg font-semibold mb-4">Jumlah Harga: Rp.{{ $totalPrice }}</p>
-                @else
-                    <p>Belum ada produk di checkout.</p>
-                @endif
-
                 <form action="{{ route('processCheckout') }}" method="POST" class="mt-6">
                     @csrf
                     <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white font-semibold hover:bg-blue-700">Checkout</button>
                 </form>
->>>>>>> 50d6e19 (yes)
+                @else
+                    <p>Belum ada produk di checkout.</p>
+                @endif
+
         </div>
     </div>
 </div>

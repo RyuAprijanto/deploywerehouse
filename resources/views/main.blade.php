@@ -3,28 +3,16 @@
 @section('title', 'Home Page')
 
 @section('content')
-<<<<<<< HEAD
 <div class="w-full flex flex-col md:flex-row items-center justify-center h-auto md:h-36 bg-blue-300 p-4 md:p-0">
     <div class="flex flex-col md:flex-row items-center justify-center py-2 w-full">
         <form class="flex flex-col md:flex-row gap-3 w-full md:w-auto" action="{{ url('/main/search') }}" method="GET">
             <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
                 <input type="text" name="search" placeholder="Search Product"
-=======
-<div class="w-full flex flex-col md:flex-row items-center justify-center h-auto md:h-36 bg-blue-300  md:p-0">
-    <div class="flex flex-col md:flex-row items-center justify-center py-2 w-full">
-        <form class="flex flex-col md:flex-row gap-3 w-full md:w-auto" action="{{ url('/main/search') }}" method="GET">
-            <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
-                <input type="text" name="search" placeholder="Cari Produk"
->>>>>>> 50d6e19 (yes)
                     class="w-2/3 md:w-80 px-3 h-10 rounded-l border-2 border-blue-600 focus:outline-none focus:border-grey-700"
                     value="{{ request()->input('search') }}">
                 <select id="pricingType" name="type"
                     class="w-1/3 md:w-40 h-10 border-2 border-blue-600 focus:outline-none focus:border-gray-700 text-gray-700 rounded px-2 mr-2 md:px-3 py-0 md:py-1 tracking-wider">
-<<<<<<< HEAD
                     <option value="All" {{ request()->input('type') == 'All' ? 'selected' : '' }}>All</option>
-=======
-                    <option value="All" {{ request()->input('type') == 'All' ? 'selected' : '' }}>Semua</option>
->>>>>>> 50d6e19 (yes)
                     @foreach ($allTypes as $type)
                         <option value="{{ $type }}" {{ request()->input('type') == $type ? 'selected' : '' }}>
                             {{ $type }}
@@ -42,11 +30,7 @@
                 <a href="{{ route('viewCheckout') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-1/2 md:w-auto">
                     Checkout
                 </a>
-<<<<<<< HEAD
                 <a href="{{ route('restockPage') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-1/2 md:w-auto">
-=======
-                <a href="{{ route('showRestockPage') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-1/2 md:w-auto">
->>>>>>> 50d6e19 (yes)
                     Restock
                 </a>
                 <a href="{{ route('viewCheckouts') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-1/2 md:w-auto">

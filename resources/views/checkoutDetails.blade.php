@@ -4,7 +4,6 @@
 
 @section('content')
 
-<<<<<<< HEAD
 <div class="container">
     {{-- <h1>Checkout Details</h1>
     <p><strong>Checkout Date:</strong> {{ $checkout->created_at->format('d M Y, H:i:s') }}</p>
@@ -23,21 +22,11 @@
         @endforeach
         <div>
     </ul> --}}
-=======
-<div class="flex flex-col gap-3 w-screen">
->>>>>>> 50d6e19 (yes)
     <div class="flex h-screen w-full mt-4 items-start justify-center">
         <div class="w-1/2 rounded bg-gray-50 px-6 pt-4 shadow-lg mt-6">
 
                 <div class="flex flex-col gap-3 border-b py-6 ">
                     <p class="flex justify-between">
-<<<<<<< HEAD
-=======
-                        <span class="text-gray-400">ID Transaksi:</span>
-                        <span>{{ $checkout->id }}</span>
-                    </p>
-                    <p class="flex justify-between">
->>>>>>> 50d6e19 (yes)
                         <span class="text-gray-400">Tanggal Transaksi:</span>
                         <span>{{ $checkout->created_at->format('d M Y, H:i:s') }}</span>
                     </p>
@@ -67,7 +56,6 @@
                         </tr>
                     </thead>
                     <tbody>
-<<<<<<< HEAD
                         {{-- <tr class="border-b border-gray-200">
                         <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
                             <div class="font-medium text-gray-900">E-commerce Platform</div>
@@ -78,9 +66,6 @@
                         <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">$5,000.00</td>
                         <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">$12</td>
                         </tr> --}}
-=======
-
->>>>>>> 50d6e19 (yes)
                         @foreach ($checkout->checkoutItems as $item)
                              <tr class="border-b border-gray-200">
                         <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
@@ -99,13 +84,5 @@
                 <a>
             </div>
         </div>
-<<<<<<< HEAD
 </div>
-=======
-         <a href="{{ route('viewCheckouts') }}" class="py-2.5 px-5 mt-8 ml-3 bottom-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 align-middle">Kembali</a>
-    </div>
-
-</div>
-
->>>>>>> 50d6e19 (yes)
 @endsection
