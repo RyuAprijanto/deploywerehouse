@@ -11,7 +11,7 @@
 @include('layouts.navbar')
 
 <main>
-    <div class="min-h-screen flex flex-col pb-10">
+    <div class="min-h-screen flex flex-col pb-10 ">
         <div class="flex-grow mb-14">
             @yield('content')
         </div>

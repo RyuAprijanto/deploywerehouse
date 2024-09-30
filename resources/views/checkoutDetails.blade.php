@@ -4,28 +4,19 @@
 
 @section('content')
 
-<div class="container">
-    {{-- <h1>Checkout Details</h1>
-    <p><strong>Checkout Date:</strong> {{ $checkout->created_at->format('d M Y, H:i:s') }}</p>
-    <p><strong>Total Products:</strong> {{ $checkout->checkoutItems->sum('quantity') }}</p>
-    <p><strong>Total Price:</strong> Rp.{{ $checkout->checkoutItems->sum(function($item) { return $item->quantity * $item->price; }) }}</p>
-
-    <h2>Products</h2> --}}
-    {{-- <ul class="list-group">
-        @foreach($checkout->checkoutItems as $item)
-            <li class="list-group-item">
-                <strong>{{ $item->product->name }}</strong> <br>
-                Quantity: {{ $item->quantity }} <br>
-                Price: Rp.{{ $item->price }} <br>
-                Total: Rp.{{ $item->quantity * $item->price }}
-            </li>
-        @endforeach
-        <div>
-    </ul> --}}
+<div class="flex flex-col gap-3 w-screen">
     <div class="flex h-screen w-full mt-4 items-start justify-center">
         <div class="w-1/2 rounded bg-gray-50 px-6 pt-4 shadow-lg mt-6">
 
                 <div class="flex flex-col gap-3 border-b py-6 ">
+                    <p class="flex justify-between">
+                        <span class="text-gray-400">ID Transaksi:</span>
+                        <span>{{ $checkout->id }}</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <span class="text-gray-400">Jenis Pembayaran:</span>
+                        <span>{{ $checkout->paymentType->name }}</span>
+                    </p>
                     <p class="flex justify-between">
                         <span class="text-gray-400">Tanggal Transaksi:</span>
                         <span>{{ $checkout->created_at->format('d M Y, H:i:s') }}</span>
@@ -56,25 +47,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- <tr class="border-b border-gray-200">
-                        <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
-                            <div class="font-medium text-gray-900">E-commerce Platform</div>
-                            <div class="mt-1 truncate text-gray-500">Laravel based e-commerce platform.</div>
-                        </td>
-                        <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">500.0</td>
-                        <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">$100.00</td>
-                        <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">$5,000.00</td>
-                        <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">$12</td>
-                        </tr> --}}
+
                         @foreach ($checkout->checkoutItems as $item)
-                             <tr class="border-b border-gray-200">
-                        <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
-                            <div class="font-medium text-gray-900">{{ $item->product->name }}</div>
-                        </td>
-                        <td class="px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">{{ $item->price }}</td>
-                        <td class="px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">{{ $item->quantity }}</td>
-                        <td class="py-5 pl-3 pr-4 text-center text-sm text-gray-500 sm:pr-0">Rp.{{ $item->quantity * $item->price }}</td>
-                        </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
+                                    <div class="font-medium text-gray-900">{{ $item->product_name }}</div>
+                                </td>
+                                <td class="px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">{{ $item->price }}</td>
+                                <td class="px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">{{ $item->quantity }}</td>
+                                <td class="py-5 pl-3 pr-4 text-center text-sm text-gray-500 sm:pr-0">Rp.{{ $item->quantity * $item->price }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -84,5 +66,9 @@
                 <a>
             </div>
         </div>
+         <a href="{{ route('viewCheckouts') }}" class="py-2.5 px-5 mt-8 ml-3 bottom-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 align-middle">Kembali</a>
+    </div>
+
 </div>
+
 @endsection

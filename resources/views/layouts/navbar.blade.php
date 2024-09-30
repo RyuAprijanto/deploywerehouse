@@ -42,29 +42,17 @@
                     <!-- Settings Dropdown -->
                     <li class="relative">
                         <button id="settingsDropdown" data-dropdown-toggle="settingsDropdownMenu" class="block py-2 px-2 text-gray-600 rounded hover:bg-gray-700 hover:text-white">
-<<<<<<< HEAD
-                            Settings
-=======
                             Pengaturan
->>>>>>> 50d6e19 (yes)
                         </button>
                         <div id="settingsDropdownMenu" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                             <ul class="py-1 text-sm text-gray-700" aria-labelledby="settingsDropdown">
                                 <li>
-<<<<<<< HEAD
-                                    <a href="{{ route('showProfile') }}" class="block py-2 px-4 hover:bg-gray-700 hover:text-white">Profile</a>
-=======
                                     <a href="{{ route('showProfile') }}" class="block py-2 px-4 hover:bg-gray-700 hover:text-white">Profil</a>
->>>>>>> 50d6e19 (yes)
                                 </li>
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-<<<<<<< HEAD
-                                        <button type="submit" class="block w-full text-left py-2 px-4 hover:bg-gray-700 hover:text-white">Logout</button>
-=======
                                         <button type="submit" class="block w-full text-left py-2 px-4 hover:bg-gray-700 hover:text-white">Keluar</button>
->>>>>>> 50d6e19 (yes)
                                     </form>
                                 </li>
                             </ul>

@@ -61,7 +61,7 @@
             <div class="mt-4 w-full flex justify-center">
                 {{ $products->appends(request()->query())->links() }}
             </div>
-
+            
         </div>
         <!-- Checkout Section -->
         <div class="col-span-1 bg-white p-4 rounded-lg shadow-md ml-6" style="min-height: 200px;">
@@ -96,16 +96,23 @@
                                 <form action="{{ route('removeItem', $item['product']->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="px-4 py-2 bg-red-500 text-white hover:bg-red-600">Remove</button>
+                                    <button type="submit" class="px-4 py-2 bg-red-500 text-white hover:bg-red-600">Hapus</button>
                                 </form>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-
+                
                 <p class="text-lg font-semibold mb-4">Jumlah Harga: Rp.{{ $totalPrice }}</p>
                 <form action="{{ route('processCheckout') }}" method="POST" class="mt-6">
+                     <!-- Payment Option Dropdown -->
+    <label for="payment_type" class="block mb-2 text-sm font-medium text-gray-900">Pilih Metode Pembayaran</label>
+    <select name="payment_type" id="payment_type" class="w-full py-2 px-3 border rounded">
+        @foreach ($paymentTypes as $paymentType)
+            <option value="{{ $paymentType->id }}">{{ $paymentType->name }}</option>
+        @endforeach
+    </select>
                     @csrf
                     <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white font-semibold hover:bg-blue-700">Checkout</button>
                 </form>

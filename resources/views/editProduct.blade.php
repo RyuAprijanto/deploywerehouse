@@ -43,11 +43,7 @@
 
                             <div class="z-0 w-full my-3 group">
                                 <label for="new_type" class="text-sm font-medium leading-6 text-gray-900">Kategori Baru</label>
-<<<<<<< HEAD
-                                <input id="new_type" name="new_type" value="{{ old('new_type') }}" type="text" class="form-group block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Add new type" disabled>
-=======
                                 <input id="new_type" name="new_type" value="{{ old('new_type') }}" type="text" class="form-group block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Tambah Kategori Baru" disabled>
->>>>>>> 50d6e19 (yes)
                             </div>
 
                             <div class="z-0 w-full my-3 group">
@@ -81,11 +77,10 @@
                             <textarea id="description" name="description" rows="4" class="form-group block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan Konten Post">{{ old('description', $product->description) }}</textarea>
                         </div>
 
-                        <label required class="form-control block mb-2 text-sm font-medium text-gray-900" for="image">Gambar Produk</label>
+                        <label required class="form-control block mb-2 text-sm font-medium text-gray-900" for="image">Gambar Produk (PNG atau JPG)</label>
                         <input name="image" class="form-group block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" id="image_path" type="file">
-                        <p class="mt-1 text-sm" id="image">SVG, PNG, JPG or GIF.</p>
 
-                        <button type="submit" class="form-control text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan Perubahan</button>
+                        <button type="submit" class="form-control mb-3 ml-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan Perubahan</button>
                         <a href="{{ route('index_home') }}" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Batal</a>                    
                     </form>
                 </div>

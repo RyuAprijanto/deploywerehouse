@@ -82,19 +82,19 @@ Route::get('/productDetail/{id}', [ItemController::class, 'viewProductDetail'])-
 Route::patch('/productDetail/{id}', [ItemController::class, 'updateStock'])->name('updateStock')->middleware('auth');
 Route::delete('/productDetail/{id}', [ItemController::class, 'deleteProduct'])->name('deleteProduct')->middleware('auth');
 
-Route::get('/checkout', [CheckoutController::class, 'viewCheckout'])->name('viewCheckout');
-Route::patch('/checkout/update-quantity/{id}', [CheckoutController::class, 'updateQuantity'])->name('updateQuantity');
-Route::post('/checkout/add/{id}', [CheckoutController::class, 'addToCheckout'])->name('addToCheckout');
+Route::get('/checkout', [CheckoutController::class, 'viewCheckout'])->name('viewCheckout')->middleware('auth');
+Route::patch('/checkout/update-quantity/{id}', [CheckoutController::class, 'updateQuantity'])->name('updateQuantity')->middleware('auth');
+Route::post('/checkout/add/{id}', [CheckoutController::class, 'addToCheckout'])->name('addToCheckout')->middleware('auth');
 Route::get('checkout/search', [CheckoutController::class, 'checkoutviewPageSearch'])->name('checkoutviewPageSearch')->middleware('auth');
-Route::delete('/checkout/remove-item/{id}', [CheckoutController::class, 'removeItem'])->name('removeItem');
-Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('processCheckout');
+Route::delete('/checkout/remove-item/{id}', [CheckoutController::class, 'removeItem'])->name('removeItem')->middleware('auth');
+Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('processCheckout')->middleware('auth');
 
 Route::get('/checkouts', [CheckoutController::class, 'viewCheckouts'])->name('viewCheckouts');
 Route::get('/checkouts/{id}', [CheckoutController::class, 'checkoutsDetails'])->name('checkoutsDetails');
 
 Route::get('/add-stock', [ItemController::class, 'addStockPage'])->name('addStockPage')->middleware('auth');
 Route::post('/add-stock', [ItemController::class, 'processAddStock'])->name('processAddStock')->middleware('auth');
-Route::post('/updateStock/{id}', [ItemController::class, 'updateStock'])->name('updateStock');
+Route::post('/updateStock/{id}', [ItemController::class, 'updateStock'])->name('updateStock')->middleware('auth');
 
 Route::get('/product/{id}/edit', [ItemController::class, 'editProduct'])->name('editProduct')->middleware('auth');
 Route::patch('/product/{id}', [ItemController::class, 'updateProduct'])->name('updateProduct')->middleware('auth');
@@ -103,15 +103,15 @@ Route::post('/suppliers/{id}', [UserController::class, 'addSupplier'])->middlewa
 Route::delete('/suppliers/{id}', [UserController::class, 'removeSupplier'])->middleware('auth');
 
 // Display the restock page
-Route::get('/restock', [ItemController::class, 'showRestockPage'])->name('showRestockPage');
+Route::get('/restock', [ItemController::class, 'showRestockPage'])->name('showRestockPage')->middleware('auth');
 
 // Process the restock form
-Route::post('/restock', [ItemController::class, 'processRestock'])->name('processRestock');
+Route::post('/restock', [ItemController::class, 'processRestock'])->name('processRestock')->middleware('auth');
 
 // Display the transactions page
-Route::get('/transactions', [TransactionController::class, 'viewTransactions'])->name('viewTransactions');
-Route::get('/transactions/add', [TransactionController::class, 'create'])->name('addTransaction');
-Route::post('/transactions/store', [TransactionController::class, 'store'])->name('storeTransaction');
-Route::get('/monthly-transactions', [TransactionController::class, 'viewAllMonthlyTransactions'])->name('monthlyTransactions');
+Route::get('/transactions', [TransactionController::class, 'viewTransactions'])->name('viewTransactions')->middleware('auth');
+Route::get('/transactions/add', [TransactionController::class, 'create'])->name('addTransaction')->middleware('auth');
+Route::post('/transactions/store', [TransactionController::class, 'store'])->name('storeTransaction')->middleware('auth');
+Route::get('/monthly-transactions', [TransactionController::class, 'viewAllMonthlyTransactions'])->name('monthlyTransactions')->middleware('auth');
 
 
