@@ -17,8 +17,8 @@ class TypeSeeder extends Seeder
     {
         DB::table('types')->insert([
 
-            ['name' => 'Beverages'],
-            ['name' => 'Snack']  
+            ['name' => 'Minuman'],
+            ['name' => 'Makanan Ringan']  
             ]);
     }
 }

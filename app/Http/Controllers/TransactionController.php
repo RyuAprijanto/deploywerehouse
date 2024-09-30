@@ -14,11 +14,9 @@ class TransactionController extends Controller
     public function viewTransactions(Request $request)
     {
         $userId = Auth::id();
-        
-        // Get the selected month and year from the request, or default to the current month and year
-        $selectedMonth = $request->get('month', now()->month);
-        $selectedYear = $request->get('year', now()->year);
-        
+        $selectedMonth = $request->get('month', 'All');
+        $selectedYear = $request->get('year', 'All');
+    
         // Group transactions by year and month, calculate total per month
         $monthlyTransactions = DB::table('transactions')
             ->join('transaction_types', 'transactions.transaction_type_id', '=', 'transaction_types.id')
@@ -33,19 +31,19 @@ class TransactionController extends Controller
             ->orderBy('month', 'desc')
             ->limit(5)
             ->get();
-        
-        // Fetch the filtered transactions based on the selected month and year
+    
+        // Fetch transactions, apply filters only if a specific month or year is selected
         $transactions = Transaction::where('user_id', $userId)
             ->with('transactionType')
             ->when($selectedMonth !== 'All', function ($query) use ($selectedMonth) {
                 return $query->whereMonth('date', $selectedMonth);
             })
-            ->whereYear('date', $selectedYear)
+            ->when($selectedYear !== 'All', function ($query) use ($selectedYear) {
+                return $query->whereYear('date', $selectedYear);
+            })
             ->orderBy('date', 'desc')
             ->paginate(5);
-        
-        // Calculate total value for the selected month and year
-
+    
         return view('transactions', [
             'transactions' => $transactions,
             'monthlyTransactions' => $monthlyTransactions,
@@ -53,6 +51,7 @@ class TransactionController extends Controller
             'selectedYear' => $selectedYear,
         ]);
     }
+    
     
     public function viewAllMonthlyTransactions()
 {

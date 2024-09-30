@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TransactionTypeSeeder extends Seeder
+class PaymentTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,11 @@ class TransactionTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('transaction_types')->insert([
+        DB::table('payment_types')->insert([
 
-            ['name' => 'Pembelian'],
-            ['name' => 'Penjualan']  
+            ['name' => 'Cash'],
+            ['name' => 'QRIS'].
+            ['name' => 'Transfer']  
             ]);
     }
 }

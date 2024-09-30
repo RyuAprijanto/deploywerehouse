@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('checkout_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('checkout_id');
-            $table->unsignedBigInteger('product_id');
+            $table->string('product_name');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->timestamps();
         
             $table->foreign('checkout_id')->references('id')->on('checkouts')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            
         });
         
     }
@@ -34,6 +34,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('checkout_items');
+        Schema::table('checkout_items', function (Blueprint $table) {
+            $table->dropColumn('product_name');
+            $table->dropColumn('price');
+        });
     }
 };

@@ -23,10 +23,10 @@ class ItemController extends Controller
     public function createProduct()
     {
         // Fetch types from the 'types' table with id and name
-        $types = DB::table('types')->pluck('name', 'id'); 
-        return view('additem', compact('types'));
+        $types = DB::table('types')->pluck('name', 'id');
+        return view('addItem', compact('types'));
     }
-    
+
     protected function createNewType($typeName)
     {
         $type = DB::table('types')->where('name', $typeName)->first();
@@ -35,7 +35,7 @@ class ItemController extends Controller
         } else {
             $typeId = $type->id;
         }
-    
+
         return $typeId;
     }
 
@@ -114,19 +114,19 @@ class ItemController extends Controller
          ->select('products.*', 'types.name as type_name')
          ->where('products.id', $id)
          ->first();
- 
+
      if (!$product) {
          return redirect()->route('index_home')->with('error', 'Product not found.');
      }
- 
+
      return view('showProductDetail', compact('product'));
  }
- 
+
 
  public function editProduct($id)
  {
      $product = Product::findOrFail($id);
-     $types = DB::table('types')->pluck('name', 'id'); 
+     $types = DB::table('types')->pluck('name', 'id');
      return view('editProduct', compact('product', 'types'));
  }
  public function updateProduct(Request $request, $id)
@@ -142,8 +142,8 @@ class ItemController extends Controller
         'expired_date' => 'nullable|date',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
- 
-     
+
+
     $product = Product::findOrFail($id);
 
     // Determine the type ID
@@ -173,7 +173,7 @@ class ItemController extends Controller
         $image->storeAs('public/images', $imageName);
         $product->image = $imageName;
     }
- 
+
     if ($product->isDirty()) {
         History::create([
             'user_id' => Auth::id(),
@@ -192,7 +192,7 @@ class ItemController extends Controller
     public function deleteProduct($id)
     {
     $product = Product::findOrFail($id);
-    $typeId = $product->type_id; 
+    $typeId = $product->type_id;
     History::create([
         'user_id' => Auth::id(),
         'product_id' => $product->id,
@@ -220,32 +220,32 @@ class ItemController extends Controller
 }
 
 
-    
+
     public function showCheckoutPage()
     {
         $products = DB::table('products')
         ->join('users', 'products.user_id', '=', 'users.id')
         ->where('user_id','=',Auth::user()->id)
-        ->select('products.*') 
+        ->select('products.*')
         ->paginate(5);
         return view('checkout', compact('products'));
     }
 
-    
-    
+
+
     public function addStockPage()
     {
         $products = DB::table('products')
         ->join('users', 'products.user_id', '=', 'users.id')
         ->where('user_id','=',Auth::user()->id)
-        ->select('products.*') 
+        ->select('products.*')
         ->paginate(5);
         return view('addStock', compact('products'));
     }
 
     public function processAddStock(Request $request)
     {
-        
+
         $changes = [];
         foreach ($request->products as $productData) {
             $product = Product::findOrFail($productData['id']);
@@ -268,7 +268,7 @@ class ItemController extends Controller
         }
         return redirect()->route('index_home')->with('success', 'Checkout completed successfully!');
     }
-   public function updateStock(Request $request, $id)
+    public function updateStock(Request $request, $id)
 {
     $product = Product::findOrFail($id);
     $action = $request->input('action');
@@ -297,6 +297,7 @@ class ItemController extends Controller
     $product->save();
     return redirect()->route('index_home')->with('success', 'Stock updated successfully!');
 }
+
 public function showRestockPage(Request $request)
 {
     // Get search term and filter type from the request
@@ -335,30 +336,40 @@ public function showRestockPage(Request $request)
 public function processRestock(Request $request)
 {
     $selectedProducts = $request->input('products', []);
+    $restockBuyPrice = $request->input('restock_buyprice', []);
+    $restockSellPrice = $request->input('restock_sellprice', []);
     $restockQuantities = $request->input('restock_qty', []);
+    $restockExpiryDates = $request->input('restock_expiry', []);
     $temp = 0;
+    $flag = 0;
     foreach ($selectedProducts as $productId) {
         $product = Product::find($productId);
 
         if ($product) {
             $newProduct = $product->replicate();
             $newProduct->stock = $restockQuantities[$productId] ?? 0;
+            $newProduct->expired_date = $restockExpiryDates[$productId] ?? null;
+            $newProduct->buy_price = $restockBuyPrice[$productId] ?? 0;
+            $newProduct->sell_price = $restockSellPrice[$productId] ?? 0;
             $temp+=$temp+$newProduct->stock*$newProduct->buy_price;
             $newProduct->save();
+            $flag = 1;
         }
     }
     $transactionTypeId = DB::table('transaction_types')
             ->where('name', 'Pembelian')
             ->value('id');
-    Transaction::create([
-        'user_id' => Auth::id(),
-        'date' => now(),
-        'transaction_type_id' => $transactionTypeId,
-        'price' => $temp,
-        'description' => 'Restock Produk',
-        'created_at' => now(),
-        'updated_at' => now()
-    ]);
+    if($flag !=0){
+        Transaction::create([
+            'user_id' => Auth::id(),
+            'date' => now(),
+            'transaction_type_id' => $transactionTypeId,
+            'price' => $temp,
+            'description' => 'Restock Produk',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+    }
     return redirect()->route('index_home')->with('success', 'Products restocked successfully!');
 }
 
